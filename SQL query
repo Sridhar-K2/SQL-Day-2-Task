@@ -1,0 +1,77 @@
+Table "studentinfo" {
+  "studentid" INT [pk, increment]
+  "studentname" VARCHAR(255)
+  "mobilenumber" VARCHAR(255) [unique]
+  "email" VARCHAR(255) [unique]
+  "mentorname" VARCHAR(255)
+  "batchid" INT
+  "batchname" VARCHAR(255)
+}
+
+Table "taskinfo" {
+  "taskid" INT [pk, increment]
+  "taskname" VARCHAR(255) [unique]
+  "studentid" INT
+  "mentorid" INT
+  "mentorname" VARCHAR(25)
+  "batchname" VARCHAR(50)
+}
+
+Table "mentorinfo" {
+  "mentorid" INT [pk, increment]
+  "email" VARCHAR(50) [unique]
+  "contactno" VARCHAR(15) [unique]
+  "assignedbatch" VARCHAR(100)
+}
+
+Table "batchinfo" {
+  "batchid" INT [pk, increment]
+  "batchname" VARCHAR(255)
+  "totalstudents" INT
+  "mentorid" INT
+}
+
+Table "queryinfo" {
+  "queryid" INT [pk, increment]
+  "querytext" TEXT
+  "studentid" INT
+  "mentorid" INT
+}
+
+Table "dashboardinfo" {
+  "dashboardid" INT [pk, increment]
+  "studentid" INT
+  "mentorid" INT
+  "batchid" INT
+}
+
+Table "mockinterviewinfo" {
+  "mockinterviewid" INT [pk, increment]
+  "studentid" INT
+  "mentorid" INT
+  "batchid" INT
+}
+
+Ref:"batchinfo"."batchid" < "studentinfo"."batchid"
+
+Ref:"studentinfo"."studentid" < "taskinfo"."studentid"
+
+Ref:"mentorinfo"."mentorid" < "taskinfo"."mentorid"
+
+Ref:"mentorinfo"."mentorid" < "batchinfo"."mentorid"
+
+Ref:"studentinfo"."studentid" < "queryinfo"."studentid"
+
+Ref:"mentorinfo"."mentorid" < "queryinfo"."mentorid"
+
+Ref:"studentinfo"."studentid" < "dashboardinfo"."studentid"
+
+Ref:"mentorinfo"."mentorid" < "dashboardinfo"."mentorid"
+
+Ref:"batchinfo"."batchid" < "dashboardinfo"."batchid"
+
+Ref:"studentinfo"."studentid" < "mockinterviewinfo"."studentid"
+
+Ref:"mentorinfo"."mentorid" < "mockinterviewinfo"."mentorid"
+
+Ref:"batchinfo"."batchid" < "mockinterviewinfo"."batchid"
